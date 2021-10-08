@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import app from './firebase.js';
 import 'firebase/compat/auth';
 
@@ -6,14 +6,20 @@ import 'firebase/compat/auth';
 const auth = app.auth();
 
 
+
+
 const Login = ()=>{
 
-    const LoginWithFirebase= useCallback(async event => {
-            event.preventDefault();
-            const {email,password} = event.target.elements;
-            await auth.signInWithEmailAndPassword(email.value, password.value)
+
+    const email = useRef(null)
+    const password = useRef(null)
+
+
+    const LoginWithFirebase= useCallback(async e => {
+            e.preventDefault();
+            await auth.signInWithEmailAndPassword(email.current.value, password.current.value)
             .then((res)=>{
-                alert("Signup is sucssesful")
+                alert("Login is sucssesful")
             })
             .catch((error)=>{
                 alert(error)
@@ -23,17 +29,18 @@ const Login = ()=>{
 
 
 
+
     return(
         <div>
             <form onSubmit={LoginWithFirebase}>
                 <h1>Login</h1>
                 <label>
                     Email<br/>
-                    <input name="email" type="email" placeholder="email"/>
+                    <input ref={email} type="email" placeholder="email"/>
                 </label><br/>
                 <label>
                     Password<br/>
-                    <input name="password" type="password" placeholder="password"/>
+                    <input ref={password} type="password" placeholder="password"/>
                 </label><br/>
                 <button type="submit" >Login</button>
             </form>

@@ -1,7 +1,6 @@
 import React from 'react'
 import app from './firebase.js'
 import { getAuth } from "firebase/auth";
-import userEvent from '@testing-library/user-event';
 
 const auth = getAuth();
 
